@@ -200,7 +200,7 @@ body.topbar-modal-open {
 
   function injectStyleAndHTML() {
     if (document.getElementById('topbar')) return; // already injected
-    const style = document.createElement('style');
+    const style = document.createElement('style'); style.innerHTML += " .topbar-container { display: flex !important; flex-wrap: nowrap !important; overflow-x: auto !important; gap: 4px !important; width: 100% !important; justify-content: space-between !important; padding: 62px 8px 8px 8px !important; } .topbar-pill { flex: 1 1 auto !important; min-width: max-content !important; text-align: center !important; font-size: 11px !important; padding: 6px 8px !important; } @media (max-width: 390px) { .topbar-pill { font-size: 10px !important; padding: 4px 6px !important; } } ";
     style.id = 'topbar-style';
     style.textContent = css;
     document.head.appendChild(style);
