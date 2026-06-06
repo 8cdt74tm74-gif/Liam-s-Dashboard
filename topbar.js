@@ -1,4 +1,4 @@
-ï»¿// =============================================================
+// =============================================================
 // Persistent dashboard top bar.
 // Drop this on any page with:
 //     <script src="topbar.js" defer></script>
@@ -22,7 +22,7 @@
 .topbar {
   position: sticky; top: 0; z-index: 40;
   display: flex; gap: 6px;
-  padding: max(12px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) 10px max(14px, env(safe-area-inset-left));
+  padding: max(55px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) 10px max(14px, env(safe-area-inset-left));
   /* Fully opaque so each page's body background can't bleed through
      and tint the bar a different color. Matches the dashboard's base
      dark background so the bar feels continuous with the page chrome. */
@@ -124,7 +124,7 @@
    1) Hide the right-side scrollbar on phones (iOS uses overlay scrollbars anyway).
    2) Stop iOS auto-text-size-adjust.
    3) touch-action: pan-y prevents pinch-zoom while still allowing vertical scroll.
-   4) overscroll-behavior on every common modal class stops scroll chaining â€”
+   4) overscroll-behavior on every common modal class stops scroll chaining —
       scrolling inside a settings popup won't drag the page behind it.
    5) When body has .topbar-modal-open, the page can't scroll at all (locked).
 */
@@ -172,18 +172,18 @@ body.topbar-modal-open {
   <a href="index.html" class="topbar-pill" id="topbarGoals">
     <span class="topbar-pill-dot"></span>
     <span class="topbar-pill-label">GOALS</span>
-    <span class="topbar-pill-count" id="topbarGoalsCount">â€”/â€”</span>
+    <span class="topbar-pill-count" id="topbarGoalsCount">—/—</span>
   </a>
   <a href="health.html" class="topbar-pill" id="topbarStack">
     <span class="topbar-pill-dot"></span>
     <span class="topbar-pill-label">STACK</span>
-    <span class="topbar-pill-count" id="topbarStackCount">â€”/â€”</span>
+    <span class="topbar-pill-count" id="topbarStackCount">—/—</span>
   </a>
   <div class="topbar-water-wrap">
     <a href="health.html#water" class="topbar-water-pill" id="topbarWater">
       <span class="topbar-pill-dot"></span>
       <span class="topbar-pill-label">WATER</span>
-      <span class="topbar-pill-count" id="topbarWaterCount">â€”/â€”</span>
+      <span class="topbar-pill-count" id="topbarWaterCount">—/—</span>
     </a>
     <button class="topbar-water-add" id="topbarWaterAdd" aria-label="Log one drink" type="button">+</button>
   </div>
@@ -278,7 +278,7 @@ body.topbar-modal-open {
     if (total === 0) return 'idle';
     if (done >= total) return 'good';
     if (done >= total * 0.5) return 'warn';
-    // Past 6pm and still under half â†’ flag as missed
+    // Past 6pm and still under half ? flag as missed
     const h = new Date().getHours();
     if (h >= 18 && done < total * 0.5) return 'miss';
     return 'warn';
@@ -321,7 +321,7 @@ body.topbar-modal-open {
   }
 
   async function pushWaterMergedToSupabase(localWater) {
-    // Only do this when we're NOT on the health page â€” health page
+    // Only do this when we're NOT on the health page — health page
     // has its own sync that already detects the localStorage change.
     if (window.location.pathname.endsWith('/health.html') ||
         window.location.pathname.endsWith('health.html')) return;
@@ -339,7 +339,7 @@ body.topbar-modal-open {
         { key: 'health', data: merged, updated_at: new Date().toISOString() },
         { onConflict: 'key' }
       );
-    } catch (e) { /* offline â€” local change will sync next time user visits health */ }
+    } catch (e) { /* offline — local change will sync next time user visits health */ }
   }
 
   function addWater() {
@@ -362,7 +362,7 @@ body.topbar-modal-open {
   }
 
   // -------- Mobile lockdown helpers --------
-  // Belt-and-suspenders zoom prevention â€” iOS Safari sometimes ignores
+  // Belt-and-suspenders zoom prevention — iOS Safari sometimes ignores
   // user-scalable=no, so we also kill the gesture events directly.
   function blockGesture(e) { e.preventDefault(); }
   function lockGestures() {
@@ -378,7 +378,7 @@ body.topbar-modal-open {
     }, { passive: false });
   }
 
-  // Watch every known modal-bg / overlay class â€” when any one of them
+  // Watch every known modal-bg / overlay class — when any one of them
   // gets `.show` or `.is-open`, lock the body scroll. When the last
   // one closes, unlock.
   function startModalLock() {
@@ -400,7 +400,7 @@ body.topbar-modal-open {
       document.body.classList.toggle('topbar-modal-open', anyOpen());
     }
     const observer = new MutationObserver(sync);
-    // Observe class changes anywhere in body â€” modal toggles are rare so
+    // Observe class changes anywhere in body — modal toggles are rare so
     // a global subtree observer is cheap.
     observer.observe(document.body, {
       attributes: true, attributeFilter: ['class'], subtree: true
